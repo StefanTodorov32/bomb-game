@@ -1,21 +1,17 @@
-interface Item {
-    id: number;
-    isBomb: boolean;
-    marked: boolean;
-}
+import {IBombBox} from "./types";
 
-export function createRandomArray(): Item[] {
-    const array: Item[] = [];
+export function createRandomArray(bombs: number): IBombBox[] {
+    const array: IBombBox[] = [];
 
     const bombIndices: number[] = [];
-    while (bombIndices.length < 3) {
+    while (bombIndices.length < bombs) {
         const index = Math.floor(Math.random() * 9);
         if (!bombIndices.includes(index)) {
             bombIndices.push(index);
         }
     }
-    for (let i = 0; i < 9; i++) {
-        const item: Item = {
+    for (let i = 0; i < 18; i++) {
+        const item: IBombBox = {
             id: i,
             isBomb: bombIndices.includes(i),
             marked: false,
