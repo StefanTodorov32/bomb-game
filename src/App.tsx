@@ -3,7 +3,6 @@ import "./App.css";
 import {createRandomArray} from "./utils";
 import {IBombBox} from "./types";
 
-
 function App() {
 	const [bombCounter, setBombCounter] = useState<number>(3);
 	const [tries, setTries] = useState<number>(3);
@@ -11,8 +10,8 @@ function App() {
 		createRandomArray(bombCounter)
 	);
 	const handleWin = bombBoxes
-		.filter((box) => box.isBomb == true)
-		.every((box) => box.marked == true);
+		.filter((box) => box.isBomb === true)
+		.every((box) => box.marked === true);
 
 	const handleBoxClick = (box: IBombBox) => {
 		if (box.isBomb) {
@@ -22,6 +21,7 @@ function App() {
 		}
 		setTries((state) => state - 1);
 	};
+
 	const handleResetGame = () => {
 		setBombCounter(3);
 		setBombBoxes(() => createRandomArray(3));
@@ -33,6 +33,15 @@ function App() {
 		setTries(bombCounter);
 	}, [bombCounter]);
 
+	const handleBombCounterChange = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const value = Number(e.target.value);
+		if (value >= 1 && value <= 8) {
+			setBombCounter(value);
+		}
+	};
+
 	return (
 		<div className="App">
 			{handleWin && <h1>You Win</h1>}
@@ -43,9 +52,7 @@ function App() {
 					<input
 						type="number"
 						value={bombCounter}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-							setBombCounter(Number(e.target.value))
-						}
+						onChange={handleBombCounterChange}
 					/>
 					<div className="wrapper">
 						{bombBoxes.map((box) => (
@@ -59,9 +66,9 @@ function App() {
 						))}
 					</div>
 				</>
-			) : <button
-				onClick={handleResetGame}
-			>Reset Game</button>}
+			) : (
+				<button onClick={handleResetGame}>Reset Game</button>
+			)}
 		</div>
 	);
 }
