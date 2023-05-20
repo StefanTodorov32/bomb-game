@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import {createRandomArray} from "./utils";
 interface IBomBox {
   id: number;
   isBomb: boolean;
@@ -54,9 +55,7 @@ function App() {
       marked: false,
     },
   ]);
-  const boxWhereBomb = bombBoxes.filter((x) => x.isBomb == true);
-  console.log(boxWhereBomb);
-  const handleWin = boxWhereBomb.every((x) => x.marked == true);
+  const handleWin = bombBoxes.filter((x) => x.isBomb == true).every((x) => x.marked == true);
   const handleBoxClick = (box: IBomBox) => {
     if (box.isBomb) {
       setBombBoxes((state) => {
